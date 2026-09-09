@@ -14,4 +14,4 @@ volumeBindingMode: WaitForFirstConsumer
 parameters:
   type: gp3
   encrypted: "true"
-  kmsKeyId:
+  kmsKeyId: arn:aws:kms:us-east-1:326130805573:key/ce297fe5-4d1c-4e7d-934a-1d01a454ca3b
