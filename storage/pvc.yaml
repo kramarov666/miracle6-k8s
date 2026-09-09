@@ -4,7 +4,6 @@ metadata:
   name: miracle6-data
   namespace: miracle6
 spec:
-  storageClassName: gp2
   accessModes:
     - ReadWriteOnce
   resources:
