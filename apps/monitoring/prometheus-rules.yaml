@@ -1,0 +1,45 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: kafka-consumer-offset-alerts
+  namespace: monitoring
+  labels:
+    release: prometheus
+spec:
+  groups:
+    - name: kafka.consumer.offsets
+      rules:
+        - alert: KafkaConsumerOffsetNotAdvancing
+          expr: |
+            (
+              changes(kafka_consumergroup_current_offset{consumergroup="b-consumer", topic="a"}[5m]) == 0
+              and on (topic, partition)
+              increase(kafka_topic_partition_current_offset{topic="a"}[5m]) > 0
+            )
+            or
+            (
+              changes(kafka_consumergroup_current_offset{consumergroup="c-consumer", topic="b"}[5m]) == 0
+              and on (topic, partition)
+              increase(kafka_topic_partition_current_offset{topic="b"}[5m]) > 0
+            )
+            or
+            (
+              changes(kafka_consumergroup_current_offset{consumergroup="d-consumer", topic="c"}[5m]) == 0
+              and on (topic, partition)
+              increase(kafka_topic_partition_current_offset{topic="c"}[5m]) > 0
+            )
+            or
+            (
+              changes(kafka_consumergroup_current_offset{consumergroup="e-consumer", topic="d"}[5m]) == 0
+              and on (topic, partition)
+              increase(kafka_topic_partition_current_offset{topic="d"}[5m]) > 0
+            )
+          labels:
+            severity: critical
+          annotations:
+            summary: "Kafka consumer {{ $labels.consumergroup }} is not advancing"
+            description: >-
+              Consumer group {{ $labels.consumergroup }} has not advanced its
+              committed offset for topic {{ $labels.topic }}, partition
+              {{ $labels.partition }} in 5 minutes while the topic offset is
+              increasing.
