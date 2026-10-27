@@ -1,0 +1,116 @@
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ping-a
+  namespace: miracle6
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ping-a
+  template:
+    metadata:
+      labels:
+        app: ping-a
+    spec:
+      containers:
+        - name: a
+          image: abcd-project-a:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: kafka-ping-config
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ping-b
+  namespace: miracle6
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ping-b
+  template:
+    metadata:
+      labels:
+        app: ping-b
+    spec:
+      containers:
+        - name: b
+          image: abcd-project-b:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: kafka-ping-config
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ping-c
+  namespace: miracle6
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ping-c
+  template:
+    metadata:
+      labels:
+        app: ping-c
+    spec:
+      containers:
+        - name: c
+          image: abcd-project-c:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: kafka-ping-config
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ping-d
+  namespace: miracle6
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ping-d
+  template:
+    metadata:
+      labels:
+        app: ping-d
+    spec:
+      containers:
+        - name: d
+          image: abcd-project-d:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: kafka-ping-config
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ping-e
+  namespace: miracle6
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ping-e
+  template:
+    metadata:
+      labels:
+        app: ping-e
+    spec:
+      containers:
+        - name: e
+          image: abcd-project-e:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: kafka-ping-config

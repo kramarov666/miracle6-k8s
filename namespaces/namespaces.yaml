@@ -16,3 +16,12 @@ metadata:
   labels:
     environment: prod
 ---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ai-investigator
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"  # Create before other resources
+  labels:
+    environment: prod
+---

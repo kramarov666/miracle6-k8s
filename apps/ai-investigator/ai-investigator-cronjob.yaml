@@ -1,0 +1,78 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: ai-investigator-template
+  namespace: ai-investigator
+spec:
+  schedule: "0 * * * *"
+  suspend: true
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      template:
+        metadata:
+          labels:
+            app: ai-investigator
+        spec:
+          serviceAccountName: ai-investigator
+          restartPolicy: Never
+          containers:
+            - name: agent
+              image: ?
+              imagePullPolicy: IfNotPresent
+              command: ["python", "main.py"]
+              env:
+                - name: ELASTICSEARCH_USERNAME
+                  valueFrom:
+                    secretKeyRef:
+                      name: elasticsearch-ai-investigator-credentials
+                      key: username
+                - name: ELASTICSEARCH_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: elasticsearch-ai-investigator-credentials
+                      key: password
+                - name: OPENAI_API_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: ai-investigator-openai
+                      key: OPENAI_API_KEY
+                # The alert-webhook replaces this default with the complete
+                # Alertmanager request JSON when it creates a one-off Job.
+                - name: ALERTMANAGER_PAYLOAD
+                  value: "{}"
+                - name: SLACK_WEBHOOK_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: slack-webhook
+                      key: url
+                - name: PRINT_MODEL_CONTEXT
+                  value: "true"
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ai-investigator
+  namespace: ai-investigator
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: ai-investigator-list-pods
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: ai-investigator-list-pods
+subjects:
+  - kind: ServiceAccount
+    name: ai-investigator
+    namespace: ai-investigator
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: ai-investigator-list-pods

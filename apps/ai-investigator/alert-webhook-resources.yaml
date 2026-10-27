@@ -1,0 +1,98 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: alert-webhook
+  namespace: ai-investigator
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: alert-webhook
+  namespace: ai-investigator
+rules:
+  - apiGroups:
+      - batch
+    resources:
+      - cronjobs
+    verbs:
+      - get
+  - apiGroups:
+      - batch
+    resources:
+      - jobs
+    verbs:
+      - create
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: alert-webhook
+  namespace: ai-investigator
+subjects:
+  - kind: ServiceAccount
+    name: alert-webhook
+    namespace: ai-investigator
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: alert-webhook
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alert-webhook
+  namespace: ai-investigator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: alert-webhook
+  template:
+    metadata:
+      labels:
+        app: alert-webhook
+    spec:
+      serviceAccountName: alert-webhook
+      containers:
+        - name: alert-webhook
+          image: alert-webhook:v1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          env:
+            - name: TEMPLATE_NAME
+              value: ai-investigator-template
+            - name: NAMESPACE
+              value: ai-investigator
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: alert-webhook
+  namespace: ai-investigator
+spec:
+  type: ClusterIP
+  selector:
+    app: alert-webhook
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+      protocol: TCP
