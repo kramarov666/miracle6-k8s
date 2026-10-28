@@ -12,6 +12,13 @@ spec:
     - broker
   storage:
     type: ephemeral
+  template:
+    pod:
+      tolerations:
+        - key: CriticalAddonsOnly
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
 ---
 apiVersion: kafka.strimzi.io/v1
 kind: Kafka
@@ -38,3 +45,10 @@ spec:
   entityOperator:
     topicOperator: {}
     userOperator: {}
+    template:
+      pod:
+        tolerations:
+          - key: CriticalAddonsOnly
+            operator: Equal
+            value: "true"
+            effect: NoSchedule

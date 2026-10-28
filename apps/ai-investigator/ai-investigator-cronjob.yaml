@@ -16,6 +16,11 @@ spec:
         spec:
           serviceAccountName: ai-investigator
           restartPolicy: Never
+          tolerations:
+            - key: CriticalAddonsOnly
+              operator: Equal
+              value: "true"
+              effect: NoSchedule
           containers:
             - name: agent
               image: ?
