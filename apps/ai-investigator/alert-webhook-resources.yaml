@@ -60,7 +60,7 @@ spec:
           effect: NoSchedule
       containers:
         - name: alert-webhook
-          image: alert-webhook:v1.0.0
+          image: kramarov555/alert-webhook:v1.0.0
           imagePullPolicy: IfNotPresent
           ports:
             - name: http

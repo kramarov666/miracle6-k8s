@@ -22,7 +22,7 @@ spec:
           effect: NoSchedule
       containers:
         - name: a
-          image: abcd-project-a:latest
+          image: kramarov555/abcd-project-a:latest
           imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:
@@ -50,7 +50,7 @@ spec:
           effect: NoSchedule
       containers:
         - name: b
-          image: abcd-project-b:latest
+          image: kramarov555/abcd-project-b:latest
           imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:
@@ -78,7 +78,7 @@ spec:
           effect: NoSchedule
       containers:
         - name: c
-          image: abcd-project-c:latest
+          image: kramarov555/abcd-project-c:latest
           imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:
@@ -106,7 +106,7 @@ spec:
           effect: NoSchedule
       containers:
         - name: d
-          image: abcd-project-d:latest
+          image: kramarov555/abcd-project-d:latest
           imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:
@@ -134,7 +134,7 @@ spec:
           effect: NoSchedule
       containers:
         - name: e
-          image: abcd-project-e:latest
+          image: kramarov555/abcd-project-e:latest
           imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:

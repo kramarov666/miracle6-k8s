@@ -23,7 +23,7 @@ spec:
               effect: NoSchedule
           containers:
             - name: agent
-              image: ?
+              image: kramarov555/ai-investigator:latest
               imagePullPolicy: IfNotPresent
               command: ["python", "main.py"]
               env:
