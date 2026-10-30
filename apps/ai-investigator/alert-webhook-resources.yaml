@@ -53,11 +53,6 @@ spec:
         app: alert-webhook
     spec:
       serviceAccountName: alert-webhook
-      tolerations:
-        - key: CriticalAddonsOnly
-          operator: Equal
-          value: "true"
-          effect: NoSchedule
       containers:
         - name: alert-webhook
           image: kramarov555/alert-webhook:v1.0.0

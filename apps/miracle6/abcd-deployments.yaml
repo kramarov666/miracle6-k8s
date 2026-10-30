@@ -15,11 +15,6 @@ spec:
       labels:
         app: ping-a
     spec:
-      tolerations:
-        - key: CriticalAddonsOnly
-          operator: Equal
-          value: "true"
-          effect: NoSchedule
       containers:
         - name: a
           image: kramarov555/abcd-project-a:latest
@@ -43,11 +38,6 @@ spec:
       labels:
         app: ping-b
     spec:
-      tolerations:
-        - key: CriticalAddonsOnly
-          operator: Equal
-          value: "true"
-          effect: NoSchedule
       containers:
         - name: b
           image: kramarov555/abcd-project-b:latest
@@ -71,11 +61,6 @@ spec:
       labels:
         app: ping-c
     spec:
-      tolerations:
-        - key: CriticalAddonsOnly
-          operator: Equal
-          value: "true"
-          effect: NoSchedule
       containers:
         - name: c
           image: kramarov555/abcd-project-c:latest
@@ -99,11 +84,6 @@ spec:
       labels:
         app: ping-d
     spec:
-      tolerations:
-        - key: CriticalAddonsOnly
-          operator: Equal
-          value: "true"
-          effect: NoSchedule
       containers:
         - name: d
           image: kramarov555/abcd-project-d:latest
@@ -127,11 +107,6 @@ spec:
       labels:
         app: ping-e
     spec:
-      tolerations:
-        - key: CriticalAddonsOnly
-          operator: Equal
-          value: "true"
-          effect: NoSchedule
       containers:
         - name: e
           image: kramarov555/abcd-project-e:latest
