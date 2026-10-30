@@ -12,6 +12,13 @@ spec:
         node.store.allow_mmap: false
       podTemplate:
         spec:
+          nodeSelector:
+            karpenter-node: "true"
+          tolerations:
+            - key: KarpenterNodePool
+              operator: Equal
+              value: "true"
+              effect: NoSchedule
           containers:
             - name: elasticsearch
               resources:

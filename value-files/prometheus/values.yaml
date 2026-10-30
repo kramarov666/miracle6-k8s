@@ -4,12 +4,35 @@ prometheus:
     replicas: 1
     retention: 24h
     storageSpec: {}
+    nodeSelector:
+      karpenter-node: "true"
+    tolerations:
+      - key: KarpenterNodePool
+        operator: Equal
+        value: "true"
+        effect: NoSchedule
+
+prometheusOperator:
+  nodeSelector:
+    karpenter-node: "true"
+  tolerations:
+    - key: KarpenterNodePool
+      operator: Equal
+      value: "true"
+      effect: NoSchedule
 
 alertmanager:
   enabled: true
   alertmanagerSpec:
     secrets:
       - slack-webhook
+    nodeSelector:
+      karpenter-node: "true"
+    tolerations:
+      - key: KarpenterNodePool
+        operator: Equal
+        value: "true"
+        effect: NoSchedule
   config:
     global:
       resolve_timeout: 5m

@@ -6,6 +6,9 @@ metadata:
     argocd.argoproj.io/sync-wave: "-1"
 spec:
   template:
+    metadata:
+      labels:
+        karpenter-node: "true"
     spec:
       nodeClassRef:
         group: karpenter.k8s.aws
@@ -29,7 +32,7 @@ spec:
           values:
             - on-demand
       taints:
-        - key: CriticalAddonsOnly
+        - key: KarpenterNodePool
           value: "true"
           effect: NoSchedule
   limits:

@@ -1,6 +1,15 @@
 managedNamespaces:
   - monitoring
 
+nodeSelector:
+  karpenter-node: "true"
+
+tolerations:
+  - key: KarpenterNodePool
+    operator: Equal
+    value: "true"
+    effect: NoSchedule
+
 resources:
   limits:
     cpu: 1

@@ -1,6 +1,15 @@
 # Test configuration. No chart version is pinned; Helm installs the latest chart.
 replicas: 1
 
+nodeSelector:
+  karpenter-node: "true"
+
+tolerations:
+  - key: KarpenterNodePool
+    operator: Equal
+    value: "true"
+    effect: NoSchedule
+
 persistence:
   enabled: true
   size: 2Gi

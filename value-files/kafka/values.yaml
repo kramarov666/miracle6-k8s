@@ -3,3 +3,10 @@ watchNamespaces:
   - miracle6
 watchAnyNamespace: false
 replicas: 1
+nodeSelector:
+  karpenter-node: "true"
+tolerations:
+  - key: KarpenterNodePool
+    operator: Equal
+    value: "true"
+    effect: NoSchedule

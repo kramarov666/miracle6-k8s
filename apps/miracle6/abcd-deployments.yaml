@@ -15,6 +15,13 @@ spec:
       labels:
         app: ping-a
     spec:
+      nodeSelector:
+        karpenter-node: "true"
+      tolerations:
+        - key: KarpenterNodePool
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
       containers:
         - name: a
           image: kramarov555/abcd-project-a:latest
@@ -38,6 +45,13 @@ spec:
       labels:
         app: ping-b
     spec:
+      nodeSelector:
+        karpenter-node: "true"
+      tolerations:
+        - key: KarpenterNodePool
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
       containers:
         - name: b
           image: kramarov555/abcd-project-b:latest
@@ -61,6 +75,13 @@ spec:
       labels:
         app: ping-c
     spec:
+      nodeSelector:
+        karpenter-node: "true"
+      tolerations:
+        - key: KarpenterNodePool
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
       containers:
         - name: c
           image: kramarov555/abcd-project-c:latest
@@ -84,6 +105,13 @@ spec:
       labels:
         app: ping-d
     spec:
+      nodeSelector:
+        karpenter-node: "true"
+      tolerations:
+        - key: KarpenterNodePool
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
       containers:
         - name: d
           image: kramarov555/abcd-project-d:latest
@@ -107,6 +135,13 @@ spec:
       labels:
         app: ping-e
     spec:
+      nodeSelector:
+        karpenter-node: "true"
+      tolerations:
+        - key: KarpenterNodePool
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
       containers:
         - name: e
           image: kramarov555/abcd-project-e:latest

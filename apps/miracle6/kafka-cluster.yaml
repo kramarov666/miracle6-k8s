@@ -12,6 +12,22 @@ spec:
     - broker
   storage:
     type: ephemeral
+  template:
+    pod:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: karpenter-node
+                    operator: In
+                    values:
+                      - "true"
+      tolerations:
+        - key: KarpenterNodePool
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
 ---
 apiVersion: kafka.strimzi.io/v1
 kind: Kafka
@@ -38,4 +54,19 @@ spec:
   entityOperator:
     topicOperator: {}
     userOperator: {}
-
+    template:
+      pod:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: karpenter-node
+                      operator: In
+                      values:
+                        - "true"
+        tolerations:
+          - key: KarpenterNodePool
+            operator: Equal
+            value: "true"
+            effect: NoSchedule

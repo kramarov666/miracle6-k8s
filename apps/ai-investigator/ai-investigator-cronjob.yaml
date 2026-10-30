@@ -16,6 +16,13 @@ spec:
         spec:
           serviceAccountName: ai-investigator
           restartPolicy: Never
+          nodeSelector:
+            karpenter-node: "true"
+          tolerations:
+            - key: KarpenterNodePool
+              operator: Equal
+              value: "true"
+              effect: NoSchedule
           containers:
             - name: agent
               image: kramarov555/ai-investigator:latest

@@ -1,6 +1,15 @@
 # Kafka exporter for the single-node Strimzi cluster.
 replicaCount: 1
 
+nodeSelector:
+  karpenter-node: "true"
+
+tolerations:
+  - key: KarpenterNodePool
+    operator: Equal
+    value: "true"
+    effect: NoSchedule
+
 kafkaServer:
   - kafka-kafka-bootstrap.miracle6.svc.cluster.local:9092
 
