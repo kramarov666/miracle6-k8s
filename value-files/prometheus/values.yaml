@@ -20,6 +20,15 @@ prometheusOperator:
       operator: Equal
       value: "true"
       effect: NoSchedule
+  admissionWebhooks:
+    patch:
+      nodeSelector:
+        karpenter-node: "true"
+      tolerations:
+        - key: KarpenterNodePool
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
 
 alertmanager:
   enabled: true
