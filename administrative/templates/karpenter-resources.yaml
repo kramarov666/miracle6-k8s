@@ -51,10 +51,10 @@ metadata:
 spec:
   amiSelectorTerms:
     - alias: al2023@latest
-  role: KarpenterNodeRole-micro-prod-eks
+  role: {{ required "karpenterNodeRole must be set" .Values.karpenterNodeRole | quote }}
   subnetSelectorTerms:
     - tags:
-        karpenter.sh/discovery: micro-prod-eks
+        "karpenter.sh/discovery": {{ required "clusterName must be set" .Values.clusterName | quote }}
   securityGroupSelectorTerms:
     - tags:
-        karpenter.sh/discovery: micro-prod-eks
+        "karpenter.sh/discovery": {{ required "clusterName must be set" .Values.clusterName | quote }}

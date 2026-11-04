@@ -9,7 +9,6 @@ volumeBindingMode: WaitForFirstConsumer
 parameters:
   type: gp3
   encrypted: "true"
-  kmsKeyId: arn:aws:kms:us-east-1:326130805573:key/6f97cd44-c403-4869-b6f7-b9383557d294
+  kmsKeyId: {{ required "kmsKeyId must be set" .Values.kmsKeyId | quote }}
 reclaimPolicy: Delete
 allowVolumeExpansion: true
-  
