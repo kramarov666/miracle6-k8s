@@ -6,9 +6,9 @@ containerRuntime: docker
 
 operator:
   nodeSelector:
-    karpenter-node: "true"
+    name: system-node
   tolerations:
-    - key: KarpenterNodePool
+    - key: CriticalAddonsOnly
       operator: Equal
       value: "true"
       effect: NoSchedule
@@ -22,10 +22,12 @@ operator:
 
 fluentbit:
   enable: true
-  nodeSelector:
-    karpenter-node: "true"
   tolerations:
     - key: KarpenterNodePool
+      operator: Equal
+      value: "true"
+      effect: NoSchedule
+    - key: CriticalAddonsOnly
       operator: Equal
       value: "true"
       effect: NoSchedule
