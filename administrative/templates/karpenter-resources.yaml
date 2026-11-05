@@ -50,7 +50,7 @@ metadata:
     argocd.argoproj.io/sync-wave: "-1"
 spec:
   amiSelectorTerms:
-    - alias: al2023@latest
+    - alias: al2023@v20261031
   role: {{ required "karpenterNodeRole must be set" .Values.karpenterNodeRole | quote }}
   subnetSelectorTerms:
     - tags:
