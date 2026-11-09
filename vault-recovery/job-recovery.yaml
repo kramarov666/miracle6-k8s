@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: vault-recovery
+  namespace: vault
+spec:
+  backoffLimit: 0
+  activeDeadlineSeconds: 3600
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: vault-recovery
+          image: kramarov555/vault-backup-recovery:v0.0.1
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: MODE
+              value: recovery
+            - name: VAULT_ADDR
+              value: https://vault.default.svc:8200
+            - name: VAULT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: vault-backup-recovery
+                  key: vault-token
+            - name: S3_BUCKET
+              value: prod-vault-backups-326130805573-us-east-1
+            - name: AWS_REGION
+              value: us-east-1
+            - name: S3_PREFIX
+              value: vault-snapshots
+            - name: S3_SSE
+              value: AES256
