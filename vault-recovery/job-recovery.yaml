@@ -9,6 +9,13 @@ spec:
   template:
     spec:
       restartPolicy: Never
+      nodeSelector:
+        karpenter-node: "true"
+      tolerations:
+        - key: KarpenterNodePool
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
       containers:
         - name: vault-recovery
           image: kramarov555/vault-backup-recovery:v0.0.1
