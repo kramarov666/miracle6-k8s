@@ -10,28 +10,23 @@ spec:
     spec:
       restartPolicy: Never
       nodeSelector:
-        karpenter-node: "true"
+        name: system-node
       tolerations:
-        - key: KarpenterNodePool
+        - key: CriticalAddonsOnly
           operator: Equal
           value: "true"
           effect: NoSchedule
       containers:
         - name: vault-backup
-          image: kramarov555/vault-backup-recovery:v0.0.1
+          image: kramarov555/vault-backup-recovery:v0.0.2
           imagePullPolicy: IfNotPresent
           env:
             - name: MODE
               value: backup
-            - name: VAULT_ADDR
-              value: https://vault.default.svc:8200
-            - name: VAULT_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: vault-backup-recovery
-                  key: vault-token
             - name: S3_BUCKET
               value: prod-vault-backups-326130805573-us-east-1
+            - name: CONSUL_HTTP_ADDR
+              value: consul-consul-server.consul.svc.cluster.local:8500
             - name: AWS_REGION
               value: us-east-1
             - name: S3_PREFIX
