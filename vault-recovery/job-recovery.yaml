@@ -3,11 +3,17 @@ kind: Job
 metadata:
   name: vault-recovery
   namespace: vault
+  labels:
+    app: vault-recovery
 spec:
   backoffLimit: 0
   activeDeadlineSeconds: 3600
   template:
+    metadata:
+      labels:
+        app: vault-recovery
     spec:
+      serviceAccountName: vault-backup-recovery
       restartPolicy: Never
       nodeSelector:
         karpenter-node: "true"
@@ -18,18 +24,13 @@ spec:
           effect: NoSchedule
       containers:
         - name: vault-recovery
-          image: kramarov555/vault-backup-recovery:v0.0.1
+          image: kramarov555/vault-backup-recovery:v0.0.3
           imagePullPolicy: IfNotPresent
           env:
             - name: MODE
               value: recovery
-            - name: VAULT_ADDR
-              value: https://vault.default.svc:8200
-            - name: VAULT_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: vault-backup-recovery
-                  key: vault-token
+            - name: CONSUL_HTTP_ADDR
+              value: consul-consul-server.consul.svc.cluster.local:8500
             - name: S3_BUCKET
               value: prod-vault-backups-326130805573-us-east-1
             - name: AWS_REGION
@@ -38,3 +39,5 @@ spec:
               value: vault-snapshots
             - name: S3_SSE
               value: AES256
+            - name: IAM_ROLE
+              value: vault-backup-role

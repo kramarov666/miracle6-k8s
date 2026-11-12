@@ -3,11 +3,17 @@ kind: Job
 metadata:
   name: vault-backup
   namespace: vault
+  labels:
+    app: vault-backup
 spec:
   backoffLimit: 0
   activeDeadlineSeconds: 3600
   template:
+    metadata:
+      labels:
+        app: vault-backup
     spec:
+      serviceAccountName: vault-backup-recovery
       restartPolicy: Never
       nodeSelector:
         name: system-node
@@ -18,7 +24,7 @@ spec:
           effect: NoSchedule
       containers:
         - name: vault-backup
-          image: kramarov555/vault-backup-recovery:v0.0.2
+          image: kramarov555/vault-backup-recovery:v0.0.4
           imagePullPolicy: IfNotPresent
           env:
             - name: MODE
@@ -33,3 +39,5 @@ spec:
               value: vault-snapshots
             - name: S3_SSE
               value: AES256
+            - name: IAM_ROLE
+              value: arn:aws:iam::326130805573:role/micro-prod-vault-backup-recovery
