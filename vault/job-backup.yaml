@@ -1,43 +1,43 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: vault-recovery
+  name: vault-backup
   namespace: vault
   labels:
-    app: vault-recovery
+    app: vault-backup
+  annotations:
+    argocd.argoproj.io/hook: PreDelete
 spec:
   backoffLimit: 0
   activeDeadlineSeconds: 3600
   template:
     metadata:
       labels:
-        app: vault-recovery
+        app: vault-backup
     spec:
       serviceAccountName: vault-backup-recovery
       restartPolicy: Never
       nodeSelector:
-        karpenter-node: "true"
+        name: system-node
       tolerations:
-        - key: KarpenterNodePool
+        - key: CriticalAddonsOnly
           operator: Equal
           value: "true"
           effect: NoSchedule
       containers:
-        - name: vault-recovery
-          image: kramarov555/vault-backup-recovery:v0.0.3
+        - name: vault-backup
+          image: kramarov555/vault-backup-recovery:v0.0.4
           imagePullPolicy: IfNotPresent
           env:
             - name: MODE
-              value: recovery
-            - name: CONSUL_HTTP_ADDR
-              value: consul-consul-server.consul.svc.cluster.local:8500
+              value: backup
             - name: S3_BUCKET
               value: prod-vault-backups-326130805573-us-east-1
+            - name: CONSUL_HTTP_ADDR
+              value: consul-consul-server.consul.svc.cluster.local:8500
             - name: AWS_REGION
               value: us-east-1
             - name: S3_PREFIX
               value: vault-snapshots
             - name: S3_SSE
               value: AES256
-            - name: IAM_ROLE
-              value: vault-backup-role

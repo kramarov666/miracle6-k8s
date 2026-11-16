@@ -1,17 +1,19 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: vault-backup
+  name: vault-recovery
   namespace: vault
   labels:
-    app: vault-backup
+    app: vault-recovery
+  annotations:
+    argocd.argoproj.io/hook: PostSync
 spec:
   backoffLimit: 0
   activeDeadlineSeconds: 3600
   template:
     metadata:
       labels:
-        app: vault-backup
+        app: vault-recovery
     spec:
       serviceAccountName: vault-backup-recovery
       restartPolicy: Never
@@ -23,21 +25,19 @@ spec:
           value: "true"
           effect: NoSchedule
       containers:
-        - name: vault-backup
+        - name: vault-recovery
           image: kramarov555/vault-backup-recovery:v0.0.4
           imagePullPolicy: IfNotPresent
           env:
             - name: MODE
-              value: backup
-            - name: S3_BUCKET
-              value: prod-vault-backups-326130805573-us-east-1
+              value: recovery
             - name: CONSUL_HTTP_ADDR
               value: consul-consul-server.consul.svc.cluster.local:8500
+            - name: S3_BUCKET
+              value: prod-vault-backups-326130805573-us-east-1
             - name: AWS_REGION
               value: us-east-1
             - name: S3_PREFIX
               value: vault-snapshots
             - name: S3_SSE
               value: AES256
-            - name: IAM_ROLE
-              value: arn:aws:iam::326130805573:role/micro-prod-vault-backup-recovery
