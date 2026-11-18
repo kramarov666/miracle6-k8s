@@ -6,7 +6,7 @@ metadata:
   labels:
     app: vault-recovery
   annotations:
-    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   backoffLimit: 0
   activeDeadlineSeconds: 3600

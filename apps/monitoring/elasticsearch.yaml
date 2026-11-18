@@ -5,6 +5,9 @@ metadata:
   namespace: monitoring
 spec:
   version: 9.5.1
+  auth:
+    fileRealm:
+      - secretName: elasticsearch-credentials
   nodeSets:
     - name: default
       count: 1
