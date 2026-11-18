@@ -5,6 +5,7 @@ metadata:
   namespace: vault
   labels:
     app: vault-recovery
+    test: test
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:
