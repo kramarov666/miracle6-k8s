@@ -51,12 +51,12 @@ fluentbit:
       httpUser:
         valueFrom:
           secretKeyRef:
-            name: elasticsearch-fluentd-credentials
+            name: elasticsearch-fluent-bit-credentials
             key: username
       httpPassword:
         valueFrom:
           secretKeyRef:
-            name: elasticsearch-fluentd-credentials
+            name: elasticsearch-fluent-bit-credentials
             key: password
       tls:
         enable: true

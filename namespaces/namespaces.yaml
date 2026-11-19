@@ -25,3 +25,10 @@ metadata:
   name: vault
   labels:
     environment: prod
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fluent-bit
+  labels:
+    environment: prod
