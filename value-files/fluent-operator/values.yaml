@@ -22,8 +22,8 @@ operator:
 
 fluentbit:
   enable: true
-  serviceAccountAnnotations:
-    argocd.argoproj.io/sync-wave: "-3"
+  #serviceAccountAnnotations:
+  #  argocd.argoproj.io/sync-wave: "-3"
   tolerations:
     - key: KarpenterNodePool
       operator: Equal
