@@ -32,6 +32,9 @@ prometheusOperator:
 
 alertmanager:
   enabled: true
+  serviceAccount:
+    create: false
+    name: kube-prometheus-stack-alertmanager
   alertmanagerSpec:
     secrets:
       - slack-webhook
