@@ -47,7 +47,8 @@ sync_wave -3 karpenter
 
 sync_wave -2 \
     administrative \
-    consul
+    consul \
+    external-secrets 
 
 sync_wave -1 \
     vault \
