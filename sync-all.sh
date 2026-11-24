@@ -52,7 +52,6 @@ sync_wave -2 \
 
 sync_wave -1 \
     vault \
-    prometheus-kafka-exporter \
     kube-prometheus-stack \
     grafana \
     strimzi-kafka-operator \
@@ -62,7 +61,9 @@ sync_wave 0 \
     external-secrets \
     miracle6
 
-sync_wave 1 fluent-operator
+sync_wave 1 \
+   fluent-operator \
+   prometheus-kafka-exporter
 
 echo ""
 echo "All synchronization waves completed successfully!"
