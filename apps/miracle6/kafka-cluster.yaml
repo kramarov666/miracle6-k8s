@@ -5,6 +5,8 @@ metadata:
   namespace: miracle6
   labels:
     strimzi.io/cluster: kafka
+  annotations:
+    argocd.argoproj.io/sync-wave: "-3"
 spec:
   replicas: 1
   roles:
@@ -37,6 +39,7 @@ metadata:
   annotations:
     strimzi.io/node-pools: enabled
     strimzi.io/kraft: enabled
+    argocd.argoproj.io/sync-wave: "-3"
 spec:
   kafka:
     version: 4.3.1
