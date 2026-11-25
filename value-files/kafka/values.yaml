@@ -10,3 +10,8 @@ tolerations:
     operator: Equal
     value: "true"
     effect: NoSchedule
+logLevel: DEBUG
+operationTimeoutMs: 600000
+extraEnvs:
+  - name: KUBERNETES_REQUEST_TIMEOUT
+    value: '60000'
