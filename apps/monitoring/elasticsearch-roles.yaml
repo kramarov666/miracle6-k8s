@@ -11,4 +11,4 @@ stringData:
       cluster: ["monitor"]
       indices:
         - names: ["*"]
-          privileges: ["read", "write", "monitor", "view_index_metadata"]
+          privileges: ["read", "write", "auto_configure", "monitor", "view_index_metadata"]
