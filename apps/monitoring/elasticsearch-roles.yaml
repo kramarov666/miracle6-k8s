@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: elasticsearch-roles
+  namespace: monitoring
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+stringData:
+  roles.yml: |
+    index_reader_writer:
+      cluster: ["monitor"]
+      indices:
+        - names: ["*"]
+          privileges: ["read", "write", "monitor", "view_index_metadata"]

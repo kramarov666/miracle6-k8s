@@ -8,6 +8,8 @@ spec:
   auth:
     fileRealm:
       - secretName: elasticsearch-credentials
+    roles:
+      - secretName: elasticsearch-roles
   nodeSets:
     - name: default
       count: 1
